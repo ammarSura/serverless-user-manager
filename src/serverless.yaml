@@ -1,0 +1,21 @@
+org: 4sura
+app: app
+
+service: sls
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  api:
+    handler: ../build/index.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: any
+
+plugins:
+  - serverless-offline

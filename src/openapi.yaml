@@ -1,0 +1,88 @@
+openapi: 3.0.1
+info:
+  title: 'My API'
+  version: 1.0.0
+paths:
+  '/users': 
+    get:
+      operationId: getUser
+      responses:
+        '200':
+          description: ok
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+    post:
+      operationId: postUser
+      responses:
+        '200':
+          description: ok
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                # userId: 
+                #   type: integer
+                #   description: userid
+                phoneNumber:
+                  type: string
+                  description: phone number
+                fname:
+                  type: string
+                  description: fname
+                lname:
+                  type: string
+                  description: lname
+
+    
+
+    patch:
+      operationId: patchUser
+      responses:
+        '200':
+          description: ok
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId: 
+                  type: integer
+                  description: userid
+                fname:
+                  type: string
+                  description: fname
+    
+    delete:
+      operationId: deleteUser
+      responses: 
+        '200':
+          description: ok
+    
+  
+components:
+  schemas:
+    User:
+      title: user
+      type: object
+      description: ''
+      properties:
+        userId:
+          type: integer
+          description: userId
+        phoneNumber:
+          type: string
+          description: phone number
+        fname:
+          type: string
+          description: fname
+        lname:
+          type: string
+          description: lname
