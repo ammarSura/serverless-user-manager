@@ -12,7 +12,7 @@ export const Source = async () => {
       host: "localhost",
       port: 5432,
       username: "postgres",
-      password: "pass",
+      password: "",
       database: "db",
       synchronize: true,
       logging: true,
