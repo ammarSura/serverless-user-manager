@@ -1,6 +1,10 @@
+import { DataSource } from 'typeorm'
 import { Users } from '../../db/entity/Users.entity'
+import { Context } from 'openapi-backend';
+import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 
-export const postUserHandler = async (c, event, context, source) => {
+
+export const postUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
     
     console.log('postUser')
 
@@ -14,7 +18,6 @@ export const postUserHandler = async (c, event, context, source) => {
             lname: body.lname
         })
 
-    console.log(results)
     
     
     return ({

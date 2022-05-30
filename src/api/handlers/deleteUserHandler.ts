@@ -1,6 +1,10 @@
+import { Context } from 'openapi-backend';
+import { DataSource } from 'typeorm';
 import { Users } from '../../db/entity/Users.entity'
+import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 
-export const deleteUserHandler = async (c, event, context, source) => {
+
+export const deleteUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
     
 
     console.log('deleteUser')
@@ -14,7 +18,7 @@ export const deleteUserHandler = async (c, event, context, source) => {
     };
 
     const results = await source.getRepository(Users).remove(entitites)
-    console.log(results)
+
     return ({
         statusCode: 200,
         body: JSON.stringify({

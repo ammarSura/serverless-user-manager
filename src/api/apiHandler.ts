@@ -4,8 +4,9 @@ import { postUserHandler } from './handlers/postUserHandler'
 import { patchUserHandler } from './handlers/patchUserHandler'
 import { deleteUserHandler } from './handlers/deleteUserHandler'
 import { Source } from '../db/data-source'
+import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
  
-export const apiHandler = async (event, context) => {
+export const apiHandler = async (event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext) => {
     
     const api = new OpenAPIBackend({
 

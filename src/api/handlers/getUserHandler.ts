@@ -1,7 +1,10 @@
 import { Context } from 'openapi-backend';
+import { DataSource } from 'typeorm';
 import { Users } from '../../db/entity/Users.entity'
+import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 
-export const getUserHandler = async (c: Context, event, context, source) => {
+
+export const getUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
     // console.log(typeof(c), 'c')
     // console.dir(c)
     // console.log(typeof(event), 'event')
@@ -14,7 +17,7 @@ export const getUserHandler = async (c: Context, event, context, source) => {
     if (queryParams) {
         results = await source.getRepository(Users).find({
             where: {
-                userId: queryParams.userId
+                userId: parseInt(queryParams.userId)
             }
         })
     } else {

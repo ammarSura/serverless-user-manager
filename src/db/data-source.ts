@@ -1,10 +1,9 @@
 import "reflect-metadata"
 
-import { DataSource, Entity } from "typeorm"
+import { DataSource } from "typeorm"
 import { Users } from "./entity/Users.entity"
 
 
-// 
 export const Source = async () => {
   const source = new DataSource(
     {
@@ -12,7 +11,7 @@ export const Source = async () => {
       host: "localhost",
       port: 5432,
       username: "postgres",
-      password: "",
+      password: "pass",
       database: "db",
       synchronize: true,
       logging: true,

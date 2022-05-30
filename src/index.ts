@@ -1,10 +1,7 @@
-import { Request } from 'openapi-backend'
-import { Context } from 'vm'
 import { apiHandler } from './api/apiHandler'
-\
-export const handler = async (event: Request, context: Context) => {
-    console.dir(event)
-    console.dir(context)
+import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
+
+export const handler = async (event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext) => {
     return (
         apiHandler(event, context)
     )
