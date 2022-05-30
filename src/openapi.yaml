@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: 'My API'
+  title: 'SLS'
   version: 1.0.0
 paths:
   '/users': 
@@ -9,26 +9,37 @@ paths:
       responses:
         '200':
           description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                
     parameters:
       - name: userId
-        in: path
-        required: true
+        in: query
         schema:
           type: integer
+      - name: phoneNumber
+        in: query
+        schema:
+          type: string
+    
     post:
       operationId: postUser
       responses:
         '200':
           description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                # userId: 
-                #   type: integer
-                #   description: userid
                 phoneNumber:
                   type: string
                   description: phone number
@@ -46,25 +57,40 @@ paths:
       responses:
         '200':
           description: ok
-
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                userId: 
-                  type: integer
-                  description: userid
-                fname:
-                  type: string
-                  description: fname
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+                
     
     delete:
       operationId: deleteUser
       responses: 
         '200':
           description: ok
+      parameters:
+      - name: userId
+        in: query
+        schema:
+          type: integer
+      - name: phoneNumber
+        in: query
+        schema:
+          type: string
+      - name: userIds
+        in: query
+        schema:
+          type: array
     
   
 components:

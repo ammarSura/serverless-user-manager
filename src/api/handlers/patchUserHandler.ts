@@ -9,12 +9,11 @@ export const patchUserHandler = async (c: Context, event: APIGatewayProxyEvent, 
     console.log('patchUser')
 
     const users = JSON.parse(event.body)
+    console.dir(users)
         
         const results = await source.getRepository(Users).save(users)
         return ({
             statusCode: 200,
-            body: JSON.stringify({
-                results: results
-            }),
+            body: JSON.stringify(results),
         })
 }

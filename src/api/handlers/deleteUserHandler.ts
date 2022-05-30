@@ -21,7 +21,5 @@ export const deleteUserHandler = async (c: Context, event: APIGatewayProxyEvent,
 
     return ({
         statusCode: 200,
-        body: JSON.stringify({
-        }),
     })
 }
