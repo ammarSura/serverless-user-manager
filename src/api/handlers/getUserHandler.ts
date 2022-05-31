@@ -5,7 +5,9 @@ import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 
 
 export const getUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
+
     
+    // console.dir(event)
     const queryParams = event.queryStringParameters
     let results;
     

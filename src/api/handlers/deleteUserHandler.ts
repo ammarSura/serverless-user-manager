@@ -4,22 +4,28 @@ import { Users } from '../../db/entity/Users.entity'
 import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 
 
-export const deleteUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
-    
-
-    console.log('deleteUser')
-    const queryParams = event.queryStringParameters
-    const ids = queryParams.userIds.split(',');
-    const entitites = [];
+const parseQueryParams = (userIds: String) => {
+    const ids = userIds.split(',');
+    const output = [];
     for (let i = 0; i < ids.length; i++) {
-        entitites.push({
-            userId: ids[i]
+        output.push({
+            userId: parseInt(ids[i])
         })
-    };
+    }
 
-    const results = await source.getRepository(Users).remove(entitites)
+    return output;
+};
+
+const deleteUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
+
+    
+    const entitites = parseQueryParams(event.queryStringParameters.userIds)
+
+    await source.getRepository(Users).remove(entitites)
 
     return ({
         statusCode: 200,
     })
 }
+
+export {deleteUserHandler, parseQueryParams}

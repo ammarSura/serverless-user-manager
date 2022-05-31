@@ -5,7 +5,19 @@ info:
 paths:
   '/users': 
     get:
+    
+      parameters:
+        - name: userId
+          in: query
+          schema:
+            type: integer
+        - name: phoneNumber
+          in: query
+          schema:
+            type: string
+            
       operationId: getUser
+      
       responses:
         '200':
           description: ok
@@ -16,27 +28,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
                 
-    parameters:
-      - name: userId
-        in: query
-        schema:
-          type: integer
-      - name: phoneNumber
-        in: query
-        schema:
-          type: string
+      
     
     post:
       operationId: postUser
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-                
+      
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -51,11 +49,43 @@ paths:
                 lname:
                   type: string
                   description: lname
+                  
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                
+      
 
     
 
     patch:
       operationId: patchUser
+      
+      parameters:
+      - name: userId
+        required: true
+        in: query
+        schema:
+          type: integer
+      - name: phoneNumber
+        required: true
+        in: query
+        schema:
+          type: string
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+          
       responses:
         '200':
           description: ok
@@ -66,33 +96,35 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
         
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
+      
                 
     
     delete:
       operationId: deleteUser
-      responses: 
-        '200':
-          description: ok
+      
       parameters:
       - name: userId
+        required: true
         in: query
         schema:
           type: integer
       - name: phoneNumber
+        required: true
         in: query
         schema:
           type: string
       - name: userIds
+        required: true
         in: query
         schema:
           type: array
+          items:
+            $ref: '#/components/schemas/User'
+            
+      responses: 
+        '200':
+          description: ok
+      
     
   
 components:
