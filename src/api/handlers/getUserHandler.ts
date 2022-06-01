@@ -6,19 +6,28 @@ import type {Response} from 'express'
 
 export const getUserHandler = async (c: Context, source: DataSource) => {
 
-    // console.log('getUser') 
+    console.log('getUser') 
 
-
-    const queryParams = c.request.query   
+    if (c.validation.valid) {
+        const queryParams = c.request.query   
     
-    const results = await source.getRepository(Users).find({
-        where: {
-            ...queryParams
-        }
-    })
+        const results = await source.getRepository(Users).find({
+            where: {
+                ...queryParams
+            }
+        })
 
-    return ({
-        statusCode: 200,
-        body: JSON.stringify(results),
-    })
+        return ({
+            statusCode: 200,
+            body: JSON.stringify(results),
+        })
+    } else {
+        return ({
+            statusCode: 400,
+            body: JSON.stringify({
+                errorMessage: "Invalid request"
+            })
+        })
+    }
+    
 }

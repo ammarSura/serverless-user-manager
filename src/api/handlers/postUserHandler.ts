@@ -7,17 +7,25 @@ import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 export const postUserHandler = async (c: Context, source: DataSource) => {
     
     console.log('postUser')
+    if (c.validation.valid) {
+        const body = c.request.requestBody
+        
+        const results = await source
+            .getRepository(Users)
+            .save({
+                ...body
+            })
 
-    const body = c.request.requestBody
-    
-    const results = await source
-        .getRepository(Users)
-        .save({
-            ...body
+        return ({
+            statusCode: 200,
+            body: JSON.stringify(results),
         })
-
-    return ({
-        statusCode: 200,
-        body: JSON.stringify(results),
-    })
+    } else {
+        return ({
+            statusCode: 400,
+            body: JSON.stringify({
+                errorMessage: "Invalid request"
+            })
+        })
+    }
 }

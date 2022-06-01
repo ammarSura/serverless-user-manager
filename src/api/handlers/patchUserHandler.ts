@@ -7,12 +7,20 @@ import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 export const patchUserHandler = async (c: Context, source: DataSource) => {
     
     console.log('patchUser')
-
-    const users = c.request.requestBody
+    if (c.validation.valid) {
+        const users = c.request.requestBody
         
         const results = await source.getRepository(Users).save(users)
         return ({
             statusCode: 200,
             body: JSON.stringify(results)
         })
+    } else {
+        return ({
+            statusCode: 400,
+            body: JSON.stringify({
+                errorMessage: "Invalid request"
+            })
+        })
+    }
 }
