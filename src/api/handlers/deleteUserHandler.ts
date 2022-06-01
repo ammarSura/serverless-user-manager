@@ -30,9 +30,6 @@ const deleteUserHandler = async (c: Context, source: DataSource) => {
 
         return ({
             statusCode: 200,
-            body: JSON.stringify({
-                work: "work"
-            })
         })
   
     } else {
