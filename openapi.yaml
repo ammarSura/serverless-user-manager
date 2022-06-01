@@ -122,11 +122,11 @@ paths:
         required: true
         in: query
         schema:
-          type: array
-          items:
-            type: integer
-        style: form
-        explode: false
+          type: string
+        #   items:
+        #     type: integer
+        # style: form
+        # explode: false
             
       responses: 
         '200':
