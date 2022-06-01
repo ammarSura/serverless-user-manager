@@ -1,11 +1,11 @@
 import OpenAPIBackend, { Context, Request } from 'openapi-backend' 
-import { getUserHandler } from './handlers/getUserHandler'
-import { postUserHandler } from './handlers/postUserHandler'
-import { patchUserHandler } from './handlers/patchUserHandler'
-import { deleteUserHandler } from './handlers/deleteUserHandler'
+
 import { Source } from '../db/data-source'
 import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
- 
+// import typeOperationHandler from "../../node_modules/openapi-backend" 
+import { handlerFunctions } from './handlerFunctions'
+import { validationFunctions } from './validationFunctions'
+
 export const apiHandler = async (event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, file: string) => {
     
     const api = new OpenAPIBackend({
@@ -17,20 +17,20 @@ export const apiHandler = async (event: APIGatewayProxyEvent, context: APIGatewa
 
     const source = await Source();
     
+    
+    
 
-    api.register({
-        'getUser' : (c, context, event) => {
-            return (getUserHandler(c, source))
-        },
-        'postUser' : (c, context, event) => {
-            return (postUserHandler(c, source))
-        },
-        'patchUser' : (c, context, event) => {
-            return (patchUserHandler(c, source))
-        },
-        'deleteUser' : (c, context, event) => {
-            return (deleteUserHandler(c, source))
-        }
+    handlerFunctions.forEach((pair) => {
+        api.register(
+            
+            pair.key,  (c, context, event) => {
+                return (pair.func(c, source))
+            }
+        )
+    });
+
+    validationFunctions.forEach((pair) => {
+        api.register( pair.key, pair.func )
     })
 
 

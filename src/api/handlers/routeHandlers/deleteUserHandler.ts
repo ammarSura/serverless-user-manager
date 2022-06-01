@@ -1,7 +1,6 @@
 import { Context } from 'openapi-backend';
 import { DataSource } from 'typeorm';
-import { Users } from '../../db/entity/Users.entity'
-import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
+import { Users } from '../../../db/entity/Users.entity'
 
 
 const parseQueryParams = (userIds: String) => {
@@ -20,7 +19,6 @@ const deleteUserHandler = async (c: Context, source: DataSource) => {
 
     console.log('deleteUser')
 
-    if (c.validation.valid) {
 
         const queryParams = c.request.query
         const entitites = parseQueryParams(queryParams.userIds as string)
@@ -28,19 +26,11 @@ const deleteUserHandler = async (c: Context, source: DataSource) => {
         await source.getRepository(Users).remove(entitites)
         
 
-        return ({
-            statusCode: 200,
+        return ( { 
+            "Message" : `User(s) ${queryParams.userIds} deleted`
         })
   
-    } else {
-        return ({
-            statusCode: 400,
-            body: JSON.stringify({
-                errorMessage: "Invalid request"
-            })
-        })
-    }
-    
+   
 }
 
 export {deleteUserHandler, parseQueryParams}
