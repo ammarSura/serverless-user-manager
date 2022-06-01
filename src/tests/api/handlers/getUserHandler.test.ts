@@ -158,7 +158,7 @@ describe('return single user data when query parameters are given else return al
     test('given no params return all users\'s data', async () => {
         // let source;
         
-        const result = await getUserHandler(c, event1, context, source)
+        const result = await getUserHandler(c, source)
         const resultLst: Users[] = JSON.parse(result.body)
         const statusCode: number = result.statusCode
         
@@ -167,7 +167,7 @@ describe('return single user data when query parameters are given else return al
     })
 
     test('given params return one user\'s data or empty array', async () => {
-        const result = await getUserHandler(c, event2, context, source)
+        const result = await getUserHandler(c, source)
         const request = JSON.parse(event2.body)
         const resultLst: Users[] = JSON.parse(result.body)
         const statusCode: number = result.statusCode

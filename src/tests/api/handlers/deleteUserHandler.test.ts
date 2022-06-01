@@ -88,7 +88,7 @@ describe('deleteUserHandler returns status 200', () => {
       });
     test('should return status 200', async () => {
 
-        const result = await deleteUserHandler(c, event, context, source)
+        const result = await deleteUserHandler(c, source)
     
         expect(result).toStrictEqual({ statusCode: 200 })
     })
