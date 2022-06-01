@@ -1,2 +1,4 @@
 build/
 node_modules/
+/src/tests/api/handlers/
+/src/tests/api/apiHandler

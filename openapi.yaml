@@ -39,6 +39,10 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+              - phoneNumber
+              - fname
+              - lname
               properties:
                 phoneNumber:
                   type: string
@@ -85,6 +89,7 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/User'
+                
           
       responses:
         '200':
@@ -119,7 +124,9 @@ paths:
         schema:
           type: array
           items:
-            $ref: '#/components/schemas/User'
+            type: integer
+        style: form
+        explode: false
             
       responses: 
         '200':
@@ -132,6 +139,11 @@ components:
     User:
       title: user
       type: object
+      required:
+        - phoneNumber
+        - fname
+        - lname
+        - userId
       description: ''
       properties:
         userId:

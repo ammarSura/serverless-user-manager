@@ -16,15 +16,22 @@ const parseQueryParams = (userIds: String) => {
     return output;
 };
 
-const deleteUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
+const deleteUserHandler = async (c: Context, source: DataSource) => {
 
+    console.log('deleteUser')
+
+
+    // const queryParams = c.request.query
+    // const entitites = parseQueryParams(queryParams.userIds as string)
+
+    // await source.getRepository(Users).remove(entitites)
     
-    const entitites = parseQueryParams(event.queryStringParameters.userIds)
-
-    await source.getRepository(Users).remove(entitites)
 
     return ({
         statusCode: 200,
+        body: JSON.stringify({
+            work: "work"
+        })
     })
 }
 

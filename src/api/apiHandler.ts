@@ -6,11 +6,11 @@ import { deleteUserHandler } from './handlers/deleteUserHandler'
 import { Source } from '../db/data-source'
 import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
  
-export const apiHandler = async (event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext) => {
+export const apiHandler = async (event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, file: string) => {
     
     const api = new OpenAPIBackend({
 
-        definition: './openapi.yaml',
+        definition: file,
         quick: true
       
     });
@@ -20,18 +20,19 @@ export const apiHandler = async (event: APIGatewayProxyEvent, context: APIGatewa
 
     api.register({
         'getUser' : (c, context, event) => {
-            return (getUserHandler(c, context, event, source))
+            return (getUserHandler(c, source))
         },
         'postUser' : (c, context, event) => {
-            return (postUserHandler(c, context, event, source))
+            return (postUserHandler(c, source))
         },
         'patchUser' : (c, context, event) => {
-            return (patchUserHandler(c, context, event, source))
+            return (patchUserHandler(c, source))
         },
         'deleteUser' : (c, context, event) => {
-            return (deleteUserHandler(c, context, event, source))
+            return (deleteUserHandler(c, source))
         }
     })
+
 
     return api.handleRequest(
         {

@@ -4,22 +4,18 @@ import { Context } from 'openapi-backend';
 import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 
 
-export const postUserHandler = async (c: Context, event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext, source: DataSource) => {
+export const postUserHandler = async (c: Context, source: DataSource) => {
     
     console.log('postUser')
 
-    const body = JSON.parse(event.body)
-    const values = [body.user_id, body.phone_number, body.fname, body.lname]
+    const body = c.request.requestBody
+    
     const results = await source
         .getRepository(Users)
         .save({
-            phoneNumber: body.phoneNumber,
-            fname: body.fname,
-            lname: body.lname
+            ...body
         })
 
-    
-    
     return ({
         statusCode: 200,
         body: JSON.stringify(results),

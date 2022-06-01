@@ -13,7 +13,7 @@ import type { Response } from 'express'
 let c: Context;
 let context: APIGatewayEventRequestContext;
 let clientCert: APIGatewayEventClientCertificate;
-const file = '/Users/ammarsura/chatdaddy/w/src/openapi.yaml'
+const file = '/Users/ammarsura/chatdaddy/w/openapi.yaml'
 import { parseQueryParams } from '../../api/handlers/deleteUserHandler'
 
 

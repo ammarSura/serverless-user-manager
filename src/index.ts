@@ -3,6 +3,8 @@ import { APIGatewayProxyEvent, APIGatewayEventRequestContext } from 'aws-lambda'
 
 export const handler = async (event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext) => {
     return (
-        apiHandler(event, context)
+        apiHandler(event, context, '/Users/ammarsura/chatdaddy/w/openapi.yaml')
+
+        
     )
 }
