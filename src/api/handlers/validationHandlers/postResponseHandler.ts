@@ -1,6 +1,5 @@
 
 export const postResponseHandler = (c, req, res) => {
-    console.log("asdasdasdasd")
     if (c.response.statusCode == 200) {
         const valid = c.api.validateResponse(c.response.body, c.operation);
         console.log(valid)
@@ -29,7 +28,6 @@ export const postResponseHandler = (c, req, res) => {
 }
 
 export const postTestResponseHandler = (c, req, res) => {
-    console.log("asdasdasdasd")
     if (c.response.statusCode == 200) {
         const valid = c.api.validateResponse(c.response.body, c.operation);
         console.log(valid)
@@ -53,11 +51,7 @@ export const postTestResponseHandler = (c, req, res) => {
     res.status(c.response.statusCode)
     res.send(JSON.stringify(c.response.body))
     
-    // return({
-    //     statusCode: c.response.statusCode,
-    //     body: JSON.stringify(c.response.body)
-    // })
-    
+   
   
     
 
