@@ -3,6 +3,7 @@ import * as express from 'express'
 
 import { OpenAPIBackend, Request } from 'openapi-backend';
 import { Source } from '../../db/data-source'
+import { Users } from "../../db/entity/Users.entity";
 import { postUserHandler } from '../../api/handlers/routeHandlers/postUserHandler'
 
 import { validationFunctions } from '../../api/validationFunctions'
@@ -73,22 +74,26 @@ describe('check if getUser routes work', () => {
     })
 
     test('if postUser creates a user given correct body', async () => {
-
-        const requestBody = {
-            phoneNumber: "911234567890",
-            fname: "a",
-            lname: "b"
+        const dummy = {
+            phoneNumber: '911234567890',
+            fname: 'postDummy1fname',
+            lname: 'postDummy1lname',
         }
+
+       
         await request(app)
             .post('/users')
-            .send({...requestBody})
+            .send({...dummy})
             .expect(200)
-            .then((res: Response) => {
+            .then( async (res: Response) => {
                 const response = (JSON.parse(res.text))
-                expect(response.fname).toEqual(requestBody.fname)
-                expect(response.lname).toEqual(requestBody.lname)
-                expect(response.phoneNumber).toEqual(requestBody.phoneNumber)
+                expect(response.fname).toEqual(dummy.fname)
+                expect(response.lname).toEqual(dummy.lname)
+                expect(response.phoneNumber).toEqual(dummy.phoneNumber)
+
+                await source.getRepository(Users).remove({userId: response.userId})
             }) 
+        
     })
 
     test.each([
@@ -115,8 +120,5 @@ describe('check if getUser routes work', () => {
       .send(row)
       .expect(400)
     })
-
-
-   
 
 })

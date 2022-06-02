@@ -76,26 +76,41 @@ describe('check if getUser routes work', () => {
 
     test('if patchUser returns array of updated users with ids unchanged if all entities are in db', async () => {
 
-        const requestBody = [
-               
-                {
-                    userId: 109,
-                    phoneNumber: "911234567890",
-                    fname: "a",
-                    lname: "b"
-                },
+        // create dummy users
+
+        const dummies = [
+            {
+                phoneNumber: '911234567890',
+                fname: 'patchDummy1fname',
+                lname: 'patchDummy1lname',
+            },
+            {
+                phoneNumber: '911234567890',
+                fname: 'patchDummy2fname',
+                lname: 'patchDummy2lname',
+            }
         ]
+
+        const results = await source
+        .getRepository(Users)
+        .save(dummies)
+
+        results.forEach(el => {
+            results.fname = `patched${results.fname}`
+        });
+
+        
         await request(app)
             .patch('/users')
             .query({
-                userId: 36,
-                phoneNumber: '91101010101',
+                userId: results[0].userId,
+                phoneNumber: results[0].phoneNumber,
             })
-            .send(requestBody)
+            .send(results)
             .expect(200)
             .then(async (res: Response) => {
                 let userIds = []
-                requestBody.forEach(element => {
+                results.forEach(element => {
                     userIds.push({
                         userId: element.userId
                     })
@@ -109,11 +124,15 @@ describe('check if getUser routes work', () => {
                         phoneNumber: true
                     },
                 })
-                expect(check.length).toEqual(requestBody.length)
+                expect(check.length).toEqual(results.length)
                 for(let i = 0; i < check.length; i++) {
-                    expect(check[i]).toEqual(requestBody[i])
+                    expect(check[i]).toEqual(results[i])
                 }
+
+                await source.getRepository(Users).remove(userIds)
             })
+
+            
     })
 
     test.each([
@@ -157,7 +176,6 @@ describe('check if getUser routes work', () => {
         
         )
       ('if patchUser with bad req body %# returns 400', async (...row) => {
-          console.log(row)
           await request(app)
           .patch('/users')
           .query({

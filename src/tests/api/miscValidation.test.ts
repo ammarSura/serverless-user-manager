@@ -14,91 +14,11 @@ import { handlerFunctions } from '../../api/handlerFunctions';
 const file = '/Users/ammarsura/chatdaddy/w/openapi.yaml'
 
 
-// const helperServer = async () => {
-//     app = express()
-//     app.use(express.json())
-    
-//     const api = new OpenAPIBackend({
 
-//         definition: file,
-//         quick: true
-        
-//     });
-//     api.init();
-    
-//     source = await Source();
-
-//     validationFunctions.forEach((pair) => {
-        
-//         api.register(pair.key, pair.func)
-        
-//     })
-      
-    
-//     api.register({
-//         'getUser' : async (c, req, res) => {
-            
-//             const result = await getUserHandler(c, source)
-
-//             return result
-//             // console.dir(c.operation)
-//             // // res.status(result.statusCode)
-//             // res.status(result.statusCode)
-//             // res.send(result.body)
-//             // res.send({status: result.statusCode, body: JSON.parse(result.body)})
-           
-            
-//         },
-//         'postUser' : async (c, req, res) => {
-//             const result = await postUserHandler(c, source)
-
-//             return result
-            
-//                 // res.status(result.statusCode)
-//                 // res.send(result.body)
-           
-            
-//         },
-//         'patchUser' : async (c, req, res) => {
-            
-//             const result = await patchUserHandler(c, source)
-
-//             return result
-        
-//             // res.status(result.statusCode)
-//             // res.send(result.body)
-            
-            
-//         },
-//         'deleteUser' : async (c, req, res) => {
-
-//             const result = await deleteUserHandler(c, source)
-
-//             return result
-               
-//         }
-//     })
-    
-//     app.use((req, res) => {
-//         return(api.handleRequest(
-//         req as Request,
-//         req,
-//         res))
-//     })
-
-//     app.listen(3001, () => {
-//         console.log(`Example app listening on port ${3001}`)
-//     })
-// }
-
-// helperServer();
 
 describe('if routes work fine', () => {
 
     let source;
-
-   
-      
     
     let app;
 

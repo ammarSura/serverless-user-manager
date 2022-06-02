@@ -39,6 +39,8 @@ describe('check if getUser routes work', () => {
         
         source = await Source();
 
+        
+
         validationFunctions.forEach((pair) => {
             if (pair.key !== 'postResponseHandler') {
                 api.register(pair.key, pair.func)
@@ -71,14 +73,41 @@ describe('check if getUser routes work', () => {
         })
     })
 
-    test('if deleteUser if user is deleted in db', async () => {
+    test('if deleteUser deletes in db', async () => {
+
+        // create dummy users
+
+        const dummies = [
+            {
+                phoneNumber: '911234567890',
+                fname: 'deleteDummy1fname',
+                lname: 'deleteDummy1lname',
+            },
+            {
+                phoneNumber: '911234567890',
+                fname: 'deleteDummy2fname',
+                lname: 'deleteDummy2lname',
+            }
+        ]
+
+        const results = await source
+        .getRepository(Users)
+        .save(dummies)
+        let userIds = '' 
+        for(let i = 0; i < results.length; i++) {
+            if (i === 0) {
+                userIds = results[i].userId
+            } else {
+                userIds = `${userIds},${results[i].userId}`
+            }
+        }
         
-        const userIds = '106'
+        // const userIds = '106'
         await request(app)
             .delete('/users')
             .query({
-                userId: 36,
-                phoneNumber: '91101010101',
+                userId: results[0].userId,
+                phoneNumber: results[0].phoneNumber,
                 userIds: userIds
             })
             .expect(200)
@@ -90,6 +119,7 @@ describe('check if getUser routes work', () => {
 
                 expect(check).toEqual([])
             })
+
     })
 
     test.each([
@@ -113,7 +143,7 @@ describe('check if getUser routes work', () => {
         .delete('/users')
             .query(row)
             .expect(400)
-      });
+        });
 
     test('if response is correct for valid request', async () => {
         const userIds = '36,37'
@@ -130,9 +160,6 @@ describe('check if getUser routes work', () => {
             .then((res: Response) => {
                 expect(JSON.parse(res.text).includes(userIds)).toBe(true)
             })
-
     })
-
-
 
 })
