@@ -27,6 +27,17 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+                  
+        '400':
+          description: Invalid query
+        '404':
+          description: Path not found
+        '405':
+          description: Method not allowed
+        '501':
+          description: Not implemented
+        '502':
+          description: Invalid response from server
                 
       
     
@@ -62,10 +73,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
                 
+        '400':
+          description: Invalid query
+        '404':
+          description: Path not found
+        '405':
+          description: Method not allowed
+        '501':
+          description: Not implemented
+        '502':
+          description: Invalid response from server
+                
       
-
-    
-
     patch:
       operationId: patchUser
       
@@ -100,6 +119,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid query
+        '404':
+          description: Path not found
+        '405':
+          description: Method not allowed
+        '501':
+          description: Not implemented
+        '502':
+          description: Invalid response from server
         
       
                 
@@ -123,14 +152,25 @@ paths:
         in: query
         schema:
           type: string
-        #   items:
-        #     type: integer
-        # style: form
-        # explode: false
             
       responses: 
         '200':
           description: ok
+          content:
+            application/json:
+              schema:
+                type: string
+                
+        '400':
+          description: Invalid query
+        '404':
+          description: Path not found
+        '405':
+          description: Method not allowed
+        '501':
+          description: Not implemented
+        '502':
+          description: Invalid response from server
       
     
   
