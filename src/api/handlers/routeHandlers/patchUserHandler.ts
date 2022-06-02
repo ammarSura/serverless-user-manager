@@ -10,6 +10,9 @@ export const patchUserHandler = async (c: Context, source: DataSource) => {
         const users = c.request.requestBody
         
         const results = await source.getRepository(Users).save(users)
-        return (results)
+        return ({
+            statusCode: 200,
+            body: results
+        })
 
 }

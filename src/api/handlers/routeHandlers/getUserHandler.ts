@@ -15,6 +15,9 @@ export const getUserHandler = async (c: Context, source: DataSource) => {
             }
         })
 
-        return (results)
+        return ({
+            statusCode: 200,
+            body: results
+        })
     
 }

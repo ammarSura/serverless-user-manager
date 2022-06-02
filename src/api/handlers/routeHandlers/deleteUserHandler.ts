@@ -25,10 +25,11 @@ const deleteUserHandler = async (c: Context, source: DataSource) => {
 
         await source.getRepository(Users).remove(entitites)
         
-
-        return ( { 
-            "Message" : `User(s) ${queryParams.userIds} deleted`
+        return ({
+            statusCode: 200,
+            body: `User(s) ${queryParams.userIds} deleted`
         })
+        
   
    
 }
